@@ -58,13 +58,11 @@ Redirection URI is a small static page, `https://apono-io.github.io/mcp-workday/
 The page sees a one-time login code in its address. That code is useless without a second value that never
 leaves the laptop (PKCE).
 
-If you fork this repo, turn on GitHub Pages for the `docs` folder of your fork. Then use your own page
-address as the Redirection URI in Workday and as `WORKDAY_REDIRECT_URI`.
-
 ## Part 3: Apono admin, once
 
 1. **Add the integration.** Choose **Workday (REST)**, and enter the four values from Part 1:
    Authorization Endpoint, Token Endpoint, Workday REST API Endpoint, OAuth Client ID.
+   Leave **MCP Package** as it is (`github:apono-io/mcp-workday`), unless you run your own copy (see below).
    No secret is asked for.
 2. **Add an access flow** for the people who may use it:
    - Target: the Workday (REST) integration.
@@ -99,11 +97,26 @@ and a user with wide access saw 13. Apono does not change what Workday allows.
 | The login page opens but Workday shows an error | Check the Redirection URI in Workday. It must be exactly `https://apono-io.github.io/mcp-workday/callback.html`. |
 | You see fewer fields than you expect | Workday leaves out fields you may not see. Ask your Workday admin about your security rights. |
 | "login timed out" | You have 5 minutes to log in. Ask for a new link. |
+| "This target could not be started" | Check that **MCP Package** on the integration is filled in and names a real package. After you change the integration, end the active access and request it again. |
+| The first connection takes a while | The first start downloads the server (about 15 seconds). Later starts are faster. |
 
-## Changing the port
+## Running your own copy (fork)
 
-The page forwards to port 8976. To use another port, change the port in `docs/callback.html` of your fork
-and set `WORKDAY_LISTEN_PORT` to the same number.
+You can fork this repo and change the code, for example to add tools.
+
+1. Fork the repo on GitHub and make your changes.
+2. In Apono, edit the Workday (REST) integration. Set **MCP Package** to `github:<your-org>/<your-repo>`.
+   To pin a version, add a tag: `github:<your-org>/<your-repo>#v1.0.0`.
+3. End any active Workday access in Apono, then request access again. The new value is used from the next access.
+
+The package must stay startable with `npx`: keep the `bin` entry and the `prepare` script in `package.json`.
+The Redirection URI can stay the same. The page only forwards the browser to the user's own laptop, so it
+works for a fork too. Tools you add also need an entry in Apono's catalog before the assistant can see
+them. Ask Apono for that.
+
+## The port
+
+The login uses port 8976 on the laptop. It is fixed in this version.
 
 ## Limits
 
