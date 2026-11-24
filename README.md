@@ -21,7 +21,16 @@ means "no permission", not "empty".
 
 - A Workday admin who can run **Register API Client** (Part 1).
 - An Apono admin who can add an integration, an access flow and an MCP server (Part 3).
-- On each user's laptop: the Apono CLI set up for your Apono account, and **Node 18 or newer**. Nothing else to install or run.
+- On each user's laptop: **Node 18 or newer** and the **local Apono agentic gateway**. Nothing else to install or run.
+
+**The local Apono agentic gateway is required.** This server runs on the user's own laptop, and the local
+gateway is what starts it. It does not work through Apono's remote (hosted) gateway.
+
+To install the local gateway in Claude Code, run this once and then sign in to Apono when asked:
+
+```bash
+claude mcp add apono -- npx -y @apono-io/apono-mcp@latest --agent-type claude-code --proxy
+```
 - Port **8976** free on the laptop while someone logs in.
 
 ## Part 1: Workday admin, once
