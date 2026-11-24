@@ -77,8 +77,32 @@ leaves the laptop (PKCE).
    - Target: the Workday (REST) integration.
    - Duration: for example 30 minutes.
    - Turn on **agentic access**.
-3. **Enable the MCP server** **Workday REST MCP** for your account. It should show two tools:
-   `get_my_profile` and `find_workers`.
+3. **Add a custom MCP server.** In Apono, add a new custom MCP server:
+   - Name: for example `Workday REST MCP`.
+   - Transport: **stdio**.
+   - Link it to the **Workday (REST)** integration from step 1. The server takes its values from there.
+   - Configuration: paste this, exactly as it is:
+
+     ```json
+     {
+       "command": "npx",
+       "args": [
+         "-y",
+         "{{credentials.mcp_package}}"
+       ],
+       "env": {
+         "WORKDAY_AUTHORIZE_URL": "{{credentials.authorize_url}}",
+         "WORKDAY_TOKEN_URL": "{{credentials.token_url}}",
+         "WORKDAY_REST_URL": "{{credentials.rest_url}}",
+         "WORKDAY_CLIENT_ID": "{{credentials.client_id}}",
+         "WORKDAY_REDIRECT_URI": "https://apono-io.github.io/mcp-workday/callback.html"
+       },
+       "credential_files": []
+     }
+     ```
+
+   The `{{credentials.…}}` parts are filled in from the integration when a user gets access. Do not
+   type your own values in them. No secret goes here.
 
 ## Part 4: First use
 
