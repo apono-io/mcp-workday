@@ -35,7 +35,7 @@ means "no permission", not "empty".
    | Client Grant Type | **Authorization Code Grant** |
    | Support Proof Key for Code Exchange (PKCE) | **Ticked** |
    | Redirection URI | `https://apono-io.github.io/mcp-workday/callback.html` (exactly this) |
-   | Non-Expiring Refresh Tokens | **Yes** |
+   | Non-Expiring Refresh Tokens | **No**. A login then ends by itself, and the user logs in again when asked. |
    | Scope (Functional Areas) | **Staffing** and **Personal Data** |
 
 3. Save. If Workday shows a client secret for this client, ignore it. Do not copy it. Apono never uses it.
