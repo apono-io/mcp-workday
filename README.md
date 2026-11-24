@@ -120,8 +120,10 @@ You can fork this repo and change the code, for example to add tools.
 
 The package must stay startable with `npx`: keep the `bin` entry and the `prepare` script in `package.json`.
 The Redirection URI can stay the same. The page only forwards the browser to the user's own laptop, so it
-works for a fork too. Tools you add also need an entry in Apono's catalog before the assistant can see
-them. Ask Apono for that.
+works for a fork too. The assistant can use a tool as soon as your copy serves it. But Apono's catalog lists the tools and what
+kind of action each one is (read, create, update, delete). Apono uses that list to apply your access
+rules. For a tool that is not in the list, Apono relies on the label the assistant gives the call. So tell
+Apono when you add a tool, above all one that changes data in Workday.
 
 ## The port
 
